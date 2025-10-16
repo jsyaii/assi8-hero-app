@@ -29,8 +29,12 @@ const AppDetails = () => {
 
 const { id } = useParams();
     const appId = parseInt(id);
-    const data = useLoaderData();
-    const singleApp = data.find(apps => apps.id === appId);
+    // const data = useLoaderData();
+    // const singleApp = data.find(apps => apps.id === appId);
+
+    const data = useLoaderData() || []; // fallback to empty array
+const singleApp = data.find(app => app.id === appId);
+
     // console.log(singleApp);
     // console.log(typeof id, data);
     const { title,
@@ -150,100 +154,6 @@ const handleInstall = (id) => {
       </div>
     </div>
 
-
-
-
-
-
-    //     <div>
-    //         <div className="app-details">
-    //   <div className="container">
-    //     {/* App Header */}
-    //     <div className="app-header">
-    //       <div className="app-image">
-    //         <img src={image} alt={title} />
-    //       </div>
-          
-    //       <div className="app-info">
-    //         <h1>{title}</h1>
-    //         <p className="company-name">Developed by {companyName}</p>
-            
-    //         <div className="app-stats">
-    //           <div className="stat">
-    //             <h3>Downloads</h3>
-    //             <p>{(downloads_millions / 1000000).toFixed(1)}M</p>
-    //           </div>
-    //           <div className="stat">
-    //             <h3>Average Ratings</h3>
-    //             <p>{ratingAvg}/5</p>
-    //           </div>
-    //           <div className="stat">
-    //             <h3>Total Reviews</h3>
-    //             <p>{reviews.toLocaleString()}</p>
-    //           </div>
-    //         </div>
-
-    //         <button
-    //         //   className={`install-btn ${isInstalled ? 'installed' : ''}`}
-    //         //   onClick={handleInstall}
-    //         //   disabled={isInstalled}
-    //         >
-    //           {/* {isInstalled ? 'Installed' : `Install Now (${app.size} MB)`} */}
-    //         </button>
-    //       </div>
-    //     </div>
-
-    //     {/* Ratings Chart */}
-    //     <div className="ratings-section">
-    //       <h2>Ratings</h2>
-    //       <div className="chart-container">
-    //         <ResponsiveContainer width="100%" height={300}>
-    //           <BarChart >
-    //             <CartesianGrid strokeDasharray="3 3" />
-    //             <XAxis dataKey="name" />
-    //             <YAxis />
-    //             <Tooltip />
-    //             <Bar dataKey="count" fill="#8884d8" />
-    //           </BarChart>
-    //         </ResponsiveContainer>
-    //       </div>
-    //     </div>
-
-    //     {/* Description */}
-    //     <div className="description-section">
-    //       <h2>Description</h2>
-    //       <div className="description-content">
-    //         <p>{description}</p>
-            
-    //         <h3>Key Features:</h3>
-    //         <ul>
-    //           <li>Customizable work and break intervals</li>
-    //           <li>Detailed statistics and progress tracking</li>
-    //           <li>Minimal and calming design</li>
-    //           <li>Task list integration with timers</li>
-    //           <li>Built-in analytics and insights</li>
-    //           <li>Background sounds for focus</li>
-    //           <li>Motivational streaks and achievements</li>
-    //         </ul>
-
-    //         <p>
-    //           For people who struggle with procrastination, the app provides motivational 
-    //           streaks and achievements. Completing multiple Pomodoro sessions unlocks 
-    //           milestones, giving a sense of accomplishment. This gamified approach makes 
-    //           focusing more engaging and less like a chore.
-    //         </p>
-
-    //         <p>
-    //           Whether you're studying for exams, coding, writing, or handling office work, 
-    //           the app adapts to your routine. By combining focus tracking, task management, 
-    //           and motivational tools, this Pomodoro app ensures that you not only work 
-    //           harder but also smarter.
-    //         </p>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
-    //     </div>
     );
 }
 
