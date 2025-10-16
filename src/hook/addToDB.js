@@ -19,13 +19,13 @@ const addToStoredDB = (id) => {
     const storedAppData = getStoredApp();
 
     if (storedAppData.includes(id)) {
-// toast("successfully Installed!")
-        console.log("hello")
-        alert("bhai ei id already exist ")
+
+        console.log("Installed")
+        alert("already exist ")
     }
     else {
         storedAppData.push(id);
-        // console.log(storedAppData);
+        
         const data = JSON.stringify(storedAppData);
         localStorage.setItem("apps",data)
 
@@ -34,7 +34,6 @@ const addToStoredDB = (id) => {
 }
 
 
-// fauu
 export const removeInstalledApp = (id) => {
     console.log(id);
   const previousInstalledApps = getInstalledApps();

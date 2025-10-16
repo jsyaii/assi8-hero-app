@@ -19,14 +19,9 @@ const AllApps = ({singleApp}) => {
     largeDescription,
   } = singleApp || {};
 
-
-
-
-  //  <Link to={`/apps/:id}`}></Link>
   
   return (
     <div className="w-11/12 mx-auto my-10">
-      {/* <Link to={`/apps/:id}`}> */}
       <Link to={`/apps/${id}`}>
       
       <div className="app-card-image">
@@ -40,11 +35,7 @@ const AllApps = ({singleApp}) => {
         </div>
       </div>
     </Link>
-      
-    </div>
-      
-   
-      
+    </div>   
   );
 }
 

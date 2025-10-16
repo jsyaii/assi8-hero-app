@@ -63,7 +63,6 @@ const NavBar = () => {
                 />
  </Link>
 
-
               </figure>
 
               <Link

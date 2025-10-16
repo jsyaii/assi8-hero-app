@@ -3,7 +3,6 @@ import { useLoaderData } from "react-router";
 import { getStoredApp } from "../../hook/addToDB";
 import { FaStar } from "react-icons/fa6";
 import { HiOutlineDownload } from "react-icons/hi";
-import AllApps from "../AllApps/AllApps";
 import { ToastContainer } from "react-toastify";
 import LoadingSpiner from "../../components/LoadingSpiner/LoadingSpiner";
 import Swal from "sweetalert2";
@@ -95,8 +94,6 @@ const InstalledApp = () => {
       </div>
 
       <ToastContainer />
-
-      
       {isLoading ? (
         <LoadingSpiner />
       ) : instalation.length === 0 ? (

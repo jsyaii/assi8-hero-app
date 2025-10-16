@@ -2,13 +2,6 @@ import React from 'react';
 
 const StateSection = () => {
 
-//  const {apps}=useAppHook();
-//     console.log(apps);
-//     const totalDownloads = apps.reduce((total, app) => total + app.downloads_millions, 0)/1000;
-//     const totalReviews = (apps.reduce((total, app) => total + app.reviews, 0)/1000000000).toFixed(2);
-//     const activeApps = apps.length-8;
-
-
     return (
        <>
       <section className="text-center bg-gradient-to-br from-[#632EE3] to-[rgb(159,98,242)] text-white p-20">
@@ -19,7 +12,6 @@ const StateSection = () => {
           <div className="p-6">
             <p className="font-light">Total Downloads</p>
             <p className="font-extrabold text-5xl md:text-7xl">
-              {/* {totalDownloads} */}
               <span>B</span>
             </p>
             <p className="font-light">21% more than last month</p>

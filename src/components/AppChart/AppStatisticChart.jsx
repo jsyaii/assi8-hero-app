@@ -1,5 +1,4 @@
 import React from "react";
-// import useAppHook from "../../hooks/useAppHook/useAppHook";
 import {
   BarChart,
   Bar,
@@ -27,9 +26,6 @@ const chartData =
   data?.uv
     ? [...data.uv].sort((a, b) => parseInt(b.name[0]) - parseInt(a.name[0]))
     : [];
-
-    // const chartData =
-    //   data?.uv.sort((a, b) => parseInt(b.name[0]) - parseInt(a.name[0])) || [];
     console.log("chartData:", chartData);
   return (
     <div className="w-[90vw] h-96 mx-auto mt-1.5 mb-10">
