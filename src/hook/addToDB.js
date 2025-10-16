@@ -33,4 +33,16 @@ const addToStoredDB = (id) => {
 
 }
 
+
+// fauu
+export const removeInstalledApp = (id) => {
+    console.log(id);
+  const previousInstalledApps = getInstalledApps();
+    const remainingApps = previousInstalledApps.filter(
+      (previousApp) => parseInt(previousApp.id) !== parseInt(id)
+    );
+    localStorage.setItem("installedApps", JSON.stringify(remainingApps));
+    toast.success("App removed from installed list");
+}
+
 export { addToStoredDB,getStoredApp };

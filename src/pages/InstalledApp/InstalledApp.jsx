@@ -1,175 +1,254 @@
-import React, { useEffect } from 'react';
-import { useLoaderData } from 'react-router';
-import { getStoredApp } from '../../hook/addToDB';
+import React, { useEffect, useState } from "react";
+import { useLoaderData } from "react-router";
+import { getStoredApp, removeInstalledApp } from "../../hook/addToDB";
+import { FaStar } from "react-icons/fa6";
+import AllApps from "../AllApps/AllApps";
+import { ToastContainer } from "react-toastify";
+import LoadingSpiner from "../../components/LoadingSpiner/LoadingSpiner";
+import { HiOutlineDownload } from "react-icons/hi";
+import Swal from "sweetalert2";
 
 const InstalledApp = () => {
-const data =useLoaderData();
+  const [instalation, setInstalation] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState(null); // "low" or "high"
+  const data = useLoaderData();
 
-console.log(data)
-
-
-
-
-
-
-
-
-//  const [readList, setReadList] = useState([])
-//     const [sort, setSort] = useState("");
-
-//     const data = useLoaderData();
-    
-
-    useEffect(() => {
-        const storedAppData = getStoredApp();
-        const ConvertedStoredApps = storedAppData.map(id => parseInt(id))
-        const myInstalation = data.filter(app => ConvertedStoredApps.includes(app.id));
-        // setReadList(myInstalation)
-        console.log(myInstalation)
-    }, [])
-
-// const handleSort = (type) => {
-//         setSort(type)
-//         if (type === "pages") {
-//             const sortedByPage = [...readList].sort((a, b) => a.totalPages - b.totalPages);
-//             setReadList(sortedByPage)
-//             console.log(sortedByPage)
-//         }
-//         if (type === "ratings") {
-//             const sortedByrating = [...readList].sort((a, b) => a.rating - b.rating);
-//             setReadList(sortedByrating)
-//         }
-
-// }
-
-
-
-
-
-
-
-
-    return (
-        <div>
-            <h1>fdmfsfsfdsds.ses</h1>
-        </div>
+  // ✅ Load Installed Apps
+  useEffect(() => {
+    setIsLoading(true);
+    const storedAppData = getStoredApp();
+    const convertedIds = storedAppData.map((id) => parseInt(id));
+    const myInstalledApps = data.filter((app) =>
+      convertedIds.includes(app.id)
     );
-}
+    setInstalation(myInstalledApps);
+    setIsLoading(false);
+  }, [data]);
+
+  // ✅ Handle Sorting by Downloads
+  const handleSort = (isLowToHigh) => {
+    setSortOrder(isLowToHigh ? "low" : "high");
+
+    const sortedApps = [...instalation].sort((a, b) => {
+      if (isLowToHigh) return a.downloads - b.downloads;
+      else return b.downloads - a.downloads;
+    });
+
+    setInstalation(sortedApps);
+  };
+
+
+
+
+
+
+ const handleUninstall = (id) => {
+    
+      Swal.fire({
+        title: "Uninstall App",
+        text: "Do you want to uninstall this app?",
+        icon: "question",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "Yes",
+        denyButtonText: "Not now",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          removeInstalledApp(id);
+          setUninstalled(!uninstalled);
+          Swal.fire(
+            "Uninstalled!",
+            `The app ${title} has been uninstalled.`,
+            "success"
+          );
+        } else if (result.isDenied) {
+          Swal.fire("The app's uninstallation was canceled.", "", "info");
+        }
+      });
+    
+  };
+
+
+
+
+
+
+
+
+  return (
+    <div className="w-11/12 mx-auto my-20">
+      <div className="text-center my-10">
+        <h1 className="text-[#001931] text-3xl md:text-5xl font-bold">
+          Your Installed Apps
+        </h1>
+        <p className="text-[#627382] mt-4">
+          Explore All Trending Apps on the Market developed by us
+        </p>
+      </div>
+
+      {/* Header and Sort */}
+      <div className="flex justify-between items-center mb-10">
+        <h2 className="text-xl md:text-2xl font-semibold text-[#001931]">
+          Total Installed Apps: {instalation.length}
+
+        </h2>
+
+
+        <div className="dropdown dropdown-bottom dropdown-end">
+          <div tabIndex={0} role="button" className="btn m-1">
+            Sort By Downloads
+          </div>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+          >
+            <li>
+              <button onClick={() => handleSort(true)}>Low to High</button>
+            </li>
+            <li>
+              <button onClick={() => handleSort(false)}>High to Low</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <ToastContainer />
+
+      {/* Loading Spinner */}
+      {isLoading ? (
+        <LoadingSpiner />
+      ) :
+       (
+
+
+
+
+
+
+
+
+
+    //    <div className="w-11/12 mx-auto my-4">
+    //     <div className="flex justify-between items-center bg-base-100 p-2 md:p-4 rounded-lg shadow-md mb-4">
+    //       <Link to={`/apps/${app.id}`}>
+    //         <div className="flex items-center gap-4">
+    //           <img
+    //             src={image}
+    //             alt={title}
+    //             className="w-16 h-16 rounded-md"
+    //           />
+    //           <div>
+    //             <p>{title}</p>
+    //             <div className="flex items-center gap-1 md:gap-2 mt-1">
+    //               <p className="text-sm text-[#00D390] flex items-center gap-1">
+    //                 <HiOutlineDownload />
+    //                 <span>
+    //                   {downloads_millions / 1000 >= 1
+    //                     ? `${downloads_millions / 1000} B`
+    //                     : `${downloads_millions / 100} M`}
+    //                 </span>
+    //               </p>
+    //               <p className="text-sm text-[#FF8811] flex items-center gap-1">
+    //                 <FaStar /> <span>{ratingAvg}</span>
+    //               </p>
+    //               <p className="text-sm text-gray-500">{size} MB</p>
+    //             </div>
+
+
+    //           </div>
+    //         </div>
+    //       </Link>
+    //       <button
+    //         onClick={() => handleUninstall(app.id)}
+    //         className="btn btn-success text-white border-none"
+    //       >
+    //         Uninstall
+    //       </button>
+    //     </div>
+    //   </div>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  
+
+        <ul className="w-11/12 mx-auto my-4">
+
+
+
+  {instalation.map((app) => (
+    <li
+      key={app.id}
+      className="flex justify-between items-center bg-base-100 p-2 md:p-4 rounded-lg shadow-md mb-4"
+    >
+
+
+      <img
+        src={app.image}
+        alt={app.title}
+        className="w-16 h-16 rounded-md"
+      />
+       <p>{app.title}</p>
+
+ <div className="flex items-center gap-1 md:gap-2 mt-1">
+                  <p className="text-sm text-[#00D390] flex items-center gap-1">
+                    <HiOutlineDownload />
+                     <span>
+                       {app.downloads_millions}
+
+                        
+                    </span>
+                  </p>
+
+
+
+
+
+
+
+
+                  <p className="text-sm text-[#FF8811] flex items-center gap-1">
+                    <FaStar /> <span>{app.ratingAvg}</span>
+                  </p>
+                  <p className="text-sm text-gray-500">{app.size} MB</p>
+                </div>
+
+
+
+
+
+      <button
+        className="mt-4 btn btn-success text-white border-none"
+        onClick={() => handleUninstall(app.id)}
+      >
+        Uninstall
+      </button>
+    </li>
+  ))}
+</ul>
+
+      )
+      }
+    </div>
+  );
+};
 
 export default InstalledApp;
-
-
-
-
-// import React, { useEffect, useState } from 'react';
-// import LoadingSpiner from '../../components/LoadingSpiner/LoadingSpiner';
-// import { toast } from 'react-toastify';
-
-// const InstalledApp = () => {
-// const [installedApps, setInstalledApps] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [sortBy, setSortBy] = useState('');
-
-//   useEffect(() => {
-//     const timer = setTimeout(() => {
-//       loadInstalledApps();
-//       setLoading(false);
-//     }, 1000);
-
-//     return () => clearTimeout(timer);
-//   }, []);
-
-//   const loadInstalledApps = () => {
-//     const apps = JSON.parse(localStorage.getItem('installedApps') || '[]');
-    
-//     if (sortBy === 'size-high') {
-//       apps.sort((a, b) => b.size - a.size);
-//     } else if (sortBy === 'size-low') {
-//       apps.sort((a, b) => a.size - b.size);
-//     }
-    
-//     setInstalledApps(apps);
-//   };
-
-//   useEffect(() => {
-//     loadInstalledApps();
-//   }, [sortBy]);
-
-//   const handleUninstall = (appId) => {
-//     const updatedApps = installedApps.filter(app => app.id !== appId);
-//     setInstalledApps(updatedApps);
-//     localStorage.setItem('installedApps', JSON.stringify(updatedApps));
-//     toast.success('App uninstalled successfully!');
-//   };
-
-//   const handleSortChange = (e) => {
-//     setSortBy(e.target.value);
-//   };
-
-//   if (loading) {
-//     // return <LoadingSpinner />;
-//     return <LoadingSpiner />;
-//   }
-
-//     return (
-//         <div>
-//              <div className="installation-page">
-//       <div className="container">
-//         <div className="page-header">
-//           <h1>Your Installed Apps</h1>
-//           <p>Explore All Trending Apps on the Market developed by us</p>
-//         </div>
-
-//         <div className="installation-controls">
-//           <div className="apps-count">
-//             <span>{installedApps.length} Apps Found</span>
-//           </div>
-          
-//           <select 
-//             className="sort-select" 
-//             value={sortBy} 
-//             onChange={handleSortChange}
-//           >
-//             <option value="">Sort By Size</option>
-//             <option value="size-high">Large - Small</option>
-//             <option value="size-low">Small - Large</option>
-//           </select>
-//         </div>
-
-//         {installedApps.length > 0 ? (
-//           <div className="installed-apps-list">
-//             {installedApps.map(app => (
-//               <div key={app.id} className="installed-app-card">
-//                 <div className="app-info">
-//                   <img src={app.image} alt={app.title} />
-//                   <div className="app-details">
-//                     <h3>{app.title}</h3>
-//                     <div className="app-meta">
-//                       <span>{(app.downloads / 1000000).toFixed(1)}M</span>
-//                       <span>⭐ {app.ratingAvg}</span>
-//                       <span>{app.size} MB</span>
-//                     </div>
-//                   </div>
-//                 </div>
-//                 <button
-//                   className="uninstall-btn"
-//                   onClick={() => handleUninstall(app.id)}
-//                 >
-//                   Uninstall
-//                 </button>
-//               </div>
-//             ))}
-//           </div>
-//         ) : (
-//           <div className="no-apps-installed">
-//             <h3>No Apps Installed</h3>
-//             <p>Install some apps to see them here</p>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//         </div>
-//     );
-// }
-
-// export default InstalledApp;
