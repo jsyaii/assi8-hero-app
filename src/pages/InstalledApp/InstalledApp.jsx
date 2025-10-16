@@ -27,7 +27,7 @@ const InstalledApp = () => {
     setIsLoading(false);
   }, [data]);
 
-  // ✅ Handle Sorting by Downloads
+ 
   const handleSort = (isLowToHigh) => {
     setSortOrder(isLowToHigh ? "low" : "high");
 
@@ -39,7 +39,7 @@ const InstalledApp = () => {
     setInstalation(sortedApps);
   };
 
-  // ✅ Handle Uninstall (integrated with your removeInstalledApp)
+  
   const handleUninstall = (id, title) => {
     Swal.fire({
       title: "Uninstall App",
@@ -50,7 +50,7 @@ const InstalledApp = () => {
       denyButtonText: "Not now",
     }).then((result) => {
       if (result.isConfirmed) {
-        removeInstalledApp(id); // calls your util
+        removeInstalledApp(id); 
         setInstalation((prev) => prev.filter((app) => app.id !== id)); // updates UI
         Swal.fire("Uninstalled!", `The app "${title}" has been uninstalled.`, "success");
       } else if (result.isDenied) {
@@ -70,7 +70,7 @@ const InstalledApp = () => {
         </p>
       </div>
 
-      {/* Header and Sort */}
+    
       <div className="flex justify-between items-center mb-10">
         <h2 className="text-xl md:text-2xl font-semibold text-[#001931]">
           Total Installed Apps: {instalation.length}
@@ -96,7 +96,7 @@ const InstalledApp = () => {
 
       <ToastContainer />
 
-      {/* Loading Spinner or App List */}
+      
       {isLoading ? (
         <LoadingSpiner />
       ) : instalation.length === 0 ? (
@@ -113,10 +113,13 @@ const InstalledApp = () => {
                 alt={app.title}
                 className="w-16 h-16 rounded-md"
               />
-              <p>{app.title}</p>
 
-              <div className="flex items-center gap-1 md:gap-2 mt-1">
-                <p className="text-sm text-[#00D390] flex items-center gap-1">
+              <div className="flex flex-col  absolute left-60 ">
+             
+                <p>{app.title}</p>
+
+              <div className="flex  gap-1   md:gap-2 mt-1">
+                <p className="text-sm text-[#00D390] flex  gap-1">
                   <HiOutlineDownload />
                   <span>{app.downloads_millions}</span>
                 </p>
@@ -125,8 +128,9 @@ const InstalledApp = () => {
                   <FaStar /> <span>{app.ratingAvg}</span>
                 </p>
                 <p className="text-sm text-gray-500">{app.size} MB</p>
+              </div> 
               </div>
-
+             
               <button
                 className="mt-4 btn btn-success text-white border-none"
                 onClick={() => handleUninstall(app.id, app.title)}
